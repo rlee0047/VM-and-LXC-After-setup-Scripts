@@ -17,32 +17,24 @@ sudo apt-get upgrade -y
 echo "### System Updated and Upgraded Successfully. ###"
 echo
 
-# --- 2. Install Docker Engine and Compose ---
-echo "### Step 2: Installing Docker Engine and Docker Compose... ###"
+# --- 2. Install Docker Repo ---
+echo "### Step 2: Installing Docker Repo... ###"
+sudo apt install -y ca-certificates curl gnupg lsb-release
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo echo  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update
 
-# Uninstall old versions if they exist
-for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do
-  sudo apt-get remove -y $pkg
-done
+# --- 3. Install Docker and Compose ---
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo docker run hello-world
+sleep 15
 
-# Add Docker's official GPG key
-sudo apt-get install -y ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
-# Add the repository to Apt sources
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-
-# Install the latest Docker packages, including the Compose plugin
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-echo "### Docker Engine and Compose Installed Successfully. ###"
-echo
+echo docker-compose --version
+sleep 15
 
 # --- 3. Post-installation Steps for Docker ---
 echo "### Step 3: Adding current user (${USER}) to the 'docker' group... ###"
