@@ -11,13 +11,15 @@
 set -e
 
 # --- 1. Update System Packages ---
-#echo "### Step 1: Updating and Upgrading System Packages... ###"
-#sudo apt-get update
-#sudo apt-get upgrade -y
-#echo "### System Updated and Upgraded Successfully. ###"
-#echo
+
+echo "### Step 1: Updating and Upgrading System Packages... ###"
+sudo apt-get update
+sudo apt-get upgrade -y
+echo "### System Updated and Upgraded Successfully. ###"
+echo
 
 # --- 2. Install Docker Repo ---
+
 echo "### Step 2: Installing Docker Repo... ###"
 sudo apt install -y ca-certificates curl gnupg lsb-release
 sudo mkdir -p /etc/apt/keyrings
@@ -26,6 +28,7 @@ sudo echo  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/d
 sudo apt update
 
 # --- 3. Install Docker and Compose ---
+
 sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 sudo docker run hello-world
 sleep 15
@@ -38,6 +41,7 @@ sleep 15
 
 # --- 3. Post-installation Steps for Docker ---
 echo "### Step 3: Adding current user (${USER}) to the 'docker' group... ###"
+
 # This allows running docker commands without sudo
 sudo usermod -aG docker $USER
 echo "### User added to docker group. You will need to log out and log back in for this to take effect, but we are rebooting instead. ###"
