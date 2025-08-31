@@ -11,11 +11,11 @@
 set -e
 
 # --- 1. Update System Packages ---
-echo "### Step 1: Updating and Upgrading System Packages... ###"
-sudo apt-get update
-sudo apt-get upgrade -y
-echo "### System Updated and Upgraded Successfully. ###"
-echo
+#echo "### Step 1: Updating and Upgrading System Packages... ###"
+#sudo apt-get update
+#sudo apt-get upgrade -y
+#echo "### System Updated and Upgraded Successfully. ###"
+#echo
 
 # --- 2. Install Docker Repo ---
 echo "### Step 2: Installing Docker Repo... ###"
