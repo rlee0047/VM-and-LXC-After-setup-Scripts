@@ -70,7 +70,7 @@ echo
 ## Install Additional Tools
 
 echo "### Step 5: Installing useful command-line tools... ###"
-sudo apt-get install -y duf tree fzf htop neofetch
+sudo apt install -y duf tree fzf htop neofetch
 echo "### Additional tools installed successfully. ###"
 echo
 
