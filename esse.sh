@@ -5,7 +5,8 @@
 # 1. Updates and upgrades all system packages.
 # 2. Installs the latest version of Docker Engine and the Docker Compose plugin.
 # 3. Adds the current user to the 'docker' group to run Docker without sudo.
-# 4. Reboots the system to apply all changes.
+# 4. Installs useful command-line tools: duf, tree, fzf, htop, and neofetch.
+# 5. Reboots the system to apply all changes.
 
 # Exit immediately if a command exits with a non-zero status.
 set -e
@@ -39,15 +40,21 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 sleep 15
 
-# --- 3. Post-installation Steps for Docker ---
-echo "### Step 3: Adding current user (${USER}) to the 'docker' group... ###"
+# --- 4. Post-installation Steps for Docker ---
+echo "### Step 4: Adding current user (${USER}) to the 'docker' group... ###"
 
 # This allows running docker commands without sudo
 sudo usermod -aG docker $USER
 echo "### User added to docker group. You will need to log out and log back in for this to take effect, but we are rebooting instead. ###"
 echo
 
-# --- 4. Final Reboot ---
+# --- 5. Install Additional Tools ---
+echo "### Step 5: Installing useful command-line tools... ###"
+sudo apt-get install -y duf tree fzf htop neofetch
+echo "### Additional tools installed successfully. ###"
+echo
+
+# --- 6. Final Reboot ---
 echo "##################################################"
 echo "###          SETUP COMPLETE!                 ###"
 echo "##################################################"
@@ -56,4 +63,3 @@ echo "The system will now reboot in 15 seconds to apply all changes."
 echo "Press Ctrl+C to cancel the reboot."
 sleep 15
 sudo reboot
-
