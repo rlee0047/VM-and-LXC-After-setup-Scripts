@@ -15,8 +15,8 @@ set -e
 ## Update System Packages 
 
 echo "### Step 1: Updating and Upgrading System Packages... ###"
-sudo apt-get update
-sudo apt-get upgrade -y
+sudo apt update
+sudo apt upgrade -y
 echo "### System Updated and Upgraded Successfully. ###"
 echo
 
