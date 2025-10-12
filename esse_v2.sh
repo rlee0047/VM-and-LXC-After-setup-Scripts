@@ -1,13 +1,12 @@
 #!/bin/bash
 
 # This script automates the setup process for a new Linux (Debian/Ubuntu) server.
-# It performs the following actions:
-# 1. Updates and upgrades all system packages.
-# 2. Creates a new user with sudo privileges.
-# 3. Installs the latest version of Docker Engine and the Docker Compose plugin.
-# 4. Adds the current user to the 'docker' group to run Docker without sudo.
-# 5. Installs useful command-line tools: duf, tree, fzf, htop, and neofetch.
-# 6. Reboots the system to apply all changes.
+# It will performs the following actions:
+# Updates and upgrades all system packages.
+# Installs the latest version of Docker Engine and the Docker Compose plugin.
+# Adds the current user to the 'docker' group to run Docker without sudo.
+# Installs useful command-line tools: duf, tree, fzf, htop, and neofetch.
+# Reboots the system to apply all changes.
 
 # Exit immediately if a command exits with a non-zero status.
 set -e
@@ -20,19 +19,6 @@ sudo apt upgrade -y
 echo "### System Updated and Upgraded Successfully. ###"
 echo
 
----
-
-## Create a New User
-
-echo "### Step 2: Creating a new user with sudo privileges... ###"
-read -p "Enter the username for the new user: " NEW_USER
-sudo adduser --gecos "" $NEW_USER
-sudo usermod -aG sudo $NEW_USER
-echo "### New user '$NEW_USER' created and added to the sudo group. ###"
-echo
-
----
-
 ## Install Docker Repo
 
 echo "### Step 3: Installing Docker Repo... ###"
@@ -41,8 +27,6 @@ sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 sudo echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt update
-
----
 
 ## Install Docker and Compose
 
@@ -56,7 +40,6 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 sleep 15
 
----
 
 ## Post-installation Steps for Docker
 
@@ -65,16 +48,12 @@ sudo usermod -aG docker $USER
 echo "### User added to docker group. You'll need to log out and log back in for this to take effect, but we are rebooting instead. ###"
 echo
 
----
-
 ## Install Additional Tools
 
 echo "### Step 5: Installing useful command-line tools... ###"
 sudo apt install -y duf tree fzf htop neofetch
 echo "### Additional tools installed successfully. ###"
 echo
-
----
 
 ## Final Reboot
 
